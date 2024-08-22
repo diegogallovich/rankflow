@@ -23,7 +23,7 @@ export default function Home() {
         </h1>
         <Text className="text-xl mb-8">
           RankFlow helps Webflow users create SEO-optimized content effortlessly, 
-          boosting your pages' search engine performance.
+          boosting your pages&apos; search engine performance.
         </Text>
         <Button href="/signup">Get Started</Button>
       </div>
