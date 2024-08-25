@@ -1,25 +1,33 @@
+"use client";
+
+// UI
 import { Text } from "../components/text";
 import { Button } from "../components/button";
-import Image from "next/image";
 import {
   LockClosedIcon,
   FolderIcon,
   ChartBarIcon,
 } from "@heroicons/react/20/solid";
+import { useState } from "react";
+import { LoginForm } from "../components/composed/login-form";
+import { SignUpForm } from "../components/composed/sign-up-form";
 
 export default function Home() {
-  const handleWebflowConnect = async () => {
-    try {
-      const response = await fetch('/api/auth/webflow', { method: 'GET' });
-      if (response.ok) {
-        const data = await response.json();
-        window.location.href = data.url;
-      } else {
-        console.error('Failed to initiate Webflow authentication');
-      }
-    } catch (error) {
-      console.error('Error during Webflow authentication:', error);
-    }
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<"login" | "signup">("login");
+
+  const openAuth = (mode: "login" | "signup") => {
+    setAuthMode(mode);
+    setIsAuthOpen(true);
+  };
+
+  const closeAuth = () => {
+    setIsAuthOpen(false);
+  };
+
+  const handleAuthSuccess = () => {
+    closeAuth();
+    // Add any additional logic for successful authentication
   };
 
   return (
@@ -62,19 +70,21 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Button
-        onClick={handleWebflowConnect}
-        className="flex items-center gap-2 px-6 py-3 text-lg font-semibold transition-colors duration-200"
-        color="blue"
-      >
-        <Image
-          src="/icons/icon-webflow.svg"
-          alt="Webflow logo"
-          width={20}
-          height={12}
-        />
-        Connect your first collection for free
-      </Button>
+      <div className="flex flex-col gap-4">
+        <Button color="blue" onClick={() => openAuth("signup")}>
+          Get Started for Free
+        </Button>
+        <Button plain onClick={() => openAuth("login")}>
+          Log in
+        </Button>
+      </div>
+
+      {authMode === "login" && (
+        <LoginForm isOpen={isAuthOpen} onClose={closeAuth} onSuccess={handleAuthSuccess} />
+      )}
+      {authMode === "signup" && (
+        <SignUpForm isOpen={isAuthOpen} onClose={closeAuth} onSuccess={handleAuthSuccess} />
+      )}
     </div>
   );
 }
