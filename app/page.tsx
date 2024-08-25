@@ -8,6 +8,20 @@ import {
 } from "@heroicons/react/20/solid";
 
 export default function Home() {
+  const handleWebflowConnect = async () => {
+    try {
+      const response = await fetch('/api/auth/webflow', { method: 'GET' });
+      if (response.ok) {
+        const data = await response.json();
+        window.location.href = data.url;
+      } else {
+        console.error('Failed to initiate Webflow authentication');
+      }
+    } catch (error) {
+      console.error('Error during Webflow authentication:', error);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center text-center">
       <h1 className="mb-6 text-6xl font-bold leading-tight text-zinc-900 dark:text-white">
@@ -49,7 +63,7 @@ export default function Home() {
         </div>
       </div>
       <Button
-        href="/api/auth/webflow"
+        onClick={handleWebflowConnect}
         className="flex items-center gap-2 px-6 py-3 text-lg font-semibold transition-colors duration-200"
         color="blue"
       >

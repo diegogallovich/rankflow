@@ -23,5 +23,5 @@ export async function GET() {
     redirectUri: REDIRECT_URI,
   });
 
-  return NextResponse.redirect(authorizeUrl);
+  return NextResponse.json({ url: authorizeUrl });
 }
