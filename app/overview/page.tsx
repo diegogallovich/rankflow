@@ -25,7 +25,8 @@ export default function Overview() {
         Welcome, {userName}!
       </h1>
       <Text className="mb-8 max-w-md text-xl text-zinc-700 dark:text-zinc-300">
-        This is your overview page. You can start using RankFlow's features now.
+        This is your overview page. You can start using RankFlow&apos;s features
+        now.
       </Text>
     </div>
   );
