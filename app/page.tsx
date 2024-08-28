@@ -48,25 +48,21 @@ export default function Home() {
             <Text className="text-sm font-bold text-zinc-900 dark:text-zinc-50">
               Step 1:
             </Text>
-            <Text className="text-sm">
-              Log in with Webflow & Connect your site
-            </Text>
+            <Text className="text-sm">Connect your site</Text>
           </div>
           <div className="flex flex-col items-center text-center">
             <FolderIcon className="mb-4 h-8 w-8 text-blue-500" />
             <Text className="text-sm font-bold text-zinc-900 dark:text-zinc-50">
               Step 2:
             </Text>
-            <Text className="text-sm">Choose a collection to sync</Text>
+            <Text className="text-sm">Sync collections</Text>
           </div>
           <div className="flex flex-col items-center text-center">
             <ChartBarIcon className="mb-4 h-8 w-8 text-blue-500" />
             <Text className="text-sm font-bold text-zinc-900 dark:text-zinc-50">
               Step 3:
             </Text>
-            <Text className="text-sm">
-              Create or edit enhanced content & start ranking higher
-            </Text>
+            <Text className="text-sm">Start AIditing</Text>
           </div>
         </div>
       </div>
@@ -80,10 +76,18 @@ export default function Home() {
       </div>
 
       {authMode === "login" && (
-        <LoginForm isOpen={isAuthOpen} onClose={closeAuth} onSuccess={handleAuthSuccess} />
+        <LoginForm
+          isOpen={isAuthOpen}
+          onClose={closeAuth}
+          onSuccess={handleAuthSuccess}
+        />
       )}
       {authMode === "signup" && (
-        <SignUpForm isOpen={isAuthOpen} onClose={closeAuth} onSuccess={handleAuthSuccess} />
+        <SignUpForm
+          isOpen={isAuthOpen}
+          onClose={closeAuth}
+          onSuccess={handleAuthSuccess}
+        />
       )}
     </div>
   );
