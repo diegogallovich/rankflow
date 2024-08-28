@@ -228,19 +228,28 @@ export default function RootLayout({
                       />
                       Collections
                     </SidebarHeading>
-                    <SidebarItem href="/collections/1">
-                      <SidebarLabel>Blog Posts</SidebarLabel>
-                    </SidebarItem>
-                    <SidebarItem href="/collections/2">
-                      <SidebarLabel>Products</SidebarLabel>
-                    </SidebarItem>
-                    <SidebarItem href="/collections/3">
-                      <SidebarLabel>Team Members</SidebarLabel>
-                    </SidebarItem>
-                    <SidebarItem href="/collections/sync" className="mt-2">
-                      <PlusIcon className="h-5 w-5" />
-                      <SidebarLabel>Sync collection</SidebarLabel>
-                    </SidebarItem>
+                    {isAuthenticated ? (
+                      <>
+                        <SidebarItem href="/collections/1">
+                          <SidebarLabel>Blog Posts</SidebarLabel>
+                        </SidebarItem>
+                        <SidebarItem href="/collections/2">
+                          <SidebarLabel>Products</SidebarLabel>
+                        </SidebarItem>
+                        <SidebarItem href="/collections/3">
+                          <SidebarLabel>Team Members</SidebarLabel>
+                        </SidebarItem>
+                        <SidebarItem href="/collections/sync" className="mt-2">
+                          <PlusIcon className="h-5 w-5" />
+                          <SidebarLabel>Sync collection</SidebarLabel>
+                        </SidebarItem>
+                      </>
+                    ) : (
+                      <SidebarItem onClick={() => openAuth("signup")}>
+                        <PlusIcon className="h-5 w-5" />
+                        <SidebarLabel>Sign up to sync collections</SidebarLabel>
+                      </SidebarItem>
+                    )}
                   </SidebarSection>
                   <SidebarSpacer />
                   <SidebarSection>
