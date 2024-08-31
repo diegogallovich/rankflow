@@ -12,7 +12,7 @@ export function ThemeToggle() {
       <Switch
         checked={theme === "dark"}
         onChange={() => setTheme(theme === "dark" ? "light" : "dark")}
-        className="mx-2"
+        className="mx-2 hover:cursor-pointer"
       />
       <span className="sr-only">Toggle dark mode</span>
       <MoonIcon className="h-4 w-4 text-slate-500" />

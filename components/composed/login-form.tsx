@@ -18,17 +18,24 @@ import { LoginFormSchema, FormState } from "@/app/lib/definitions";
 interface LoginFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: () => void;
+  onSuccess: (email: string, password: string) => Promise<void>;
+  formState: { message?: string };
 }
 
-export function LoginForm({ isOpen, onClose, onSuccess }: LoginFormProps) {
-  const [formState, setFormState] = useState<FormState>(undefined);
+export function LoginForm({
+  isOpen,
+  onClose,
+  onSuccess,
+  formState: initialFormState,
+}: LoginFormProps) {
+  const [localFormState, setLocalFormState] =
+    useState<FormState>(initialFormState);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-    setFormState(undefined);
+    setLocalFormState({});
 
     const formData = new FormData(event.currentTarget);
 
@@ -38,7 +45,7 @@ export function LoginForm({ isOpen, onClose, onSuccess }: LoginFormProps) {
     });
 
     if (!validatedFields.success) {
-      setFormState({
+      setLocalFormState({
         errors: validatedFields.error.flatten().fieldErrors,
       });
       setIsLoading(false);
@@ -48,11 +55,13 @@ export function LoginForm({ isOpen, onClose, onSuccess }: LoginFormProps) {
     const { email, password } = validatedFields.data;
 
     try {
-      await account.createSession(email, password);
-      onSuccess();
+      // Directly call onSuccess, which will use the login function from AuthContext
+      await onSuccess(email, password);
+      onClose(); // Close the form after successful login
     } catch (error: any) {
-      setFormState({
-        message: "Invalid email or password. Please try again.",
+      console.error("Login error:", error);
+      setLocalFormState({
+        message: error.message || "Invalid email or password. Please try again.",
       });
     } finally {
       setIsLoading(false);
@@ -72,29 +81,21 @@ export function LoginForm({ isOpen, onClose, onSuccess }: LoginFormProps) {
           <Fieldset>
             <Field>
               <Label>Email</Label>
-              <Input
-                type="email"
-                name="email"
-                required
-              />
-              {formState?.errors?.email && (
-                <ErrorMessage>{formState.errors.email[0]}</ErrorMessage>
+              <Input type="email" name="email" required />
+              {localFormState?.errors?.email && (
+                <ErrorMessage>{localFormState.errors.email[0]}</ErrorMessage>
               )}
             </Field>
             <Field>
               <Label>Password</Label>
-              <Input
-                type="password"
-                name="password"
-                required
-              />
-              {formState?.errors?.password && (
-                <ErrorMessage>{formState.errors.password[0]}</ErrorMessage>
+              <Input type="password" name="password" required />
+              {localFormState?.errors?.password && (
+                <ErrorMessage>{localFormState.errors.password[0]}</ErrorMessage>
               )}
             </Field>
           </Fieldset>
-          {formState?.message && (
-            <ErrorMessage>{formState.message}</ErrorMessage>
+          {localFormState?.message && (
+            <ErrorMessage>{localFormState.message}</ErrorMessage>
           )}
           <DialogActions>
             <Button type="submit" color="blue" disabled={isLoading}>

@@ -11,15 +11,24 @@ import {
   LightBulbIcon,
   ChartPieIcon,
 } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Add useEffect here
 import { LoginForm } from "../components/composed/login-form";
 import { SignUpForm } from "../components/composed/sign-up-form";
-import { Input } from "../components/input";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/hooks/useAuth";
 
 export default function Home() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
-  const [email, setEmail] = useState("");
+  const router = useRouter();
+  const { login, signup, isAuthenticated } = useAuth();
+  const [formState, setFormState] = useState<{ message?: string }>({});
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/overview");
+    }
+  }, [isAuthenticated, router]);
 
   const openAuth = (mode: "login" | "signup") => {
     setAuthMode(mode);
@@ -30,16 +39,25 @@ export default function Home() {
     setIsAuthOpen(false);
   };
 
-  const handleAuthSuccess = () => {
-    closeAuth();
-    // Add any additional logic for successful authentication
-  };
-
-  const handleEmailSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Add logic to handle email submission
-    console.log("Email submitted:", email);
-    setEmail("");
+  const handleAuthSuccess = async (email: string, password: string) => {
+    try {
+      if (authMode === "signup") {
+        await signup(email, password, email); // Assuming the name is the same as email for now
+        closeAuth(); // Close the auth modal
+        console.log("Signup successful, redirecting to onboarding");
+        router.push("/onboarding");
+      } else {
+        await login(email, password);
+        closeAuth(); // Close the auth modal
+        console.log("Login successful, redirecting to overview");
+        router.push("/overview");
+      }
+    } catch (error) {
+      console.error("Authentication error:", error);
+      setFormState({
+        message: "An error occurred during authentication. Please try again.",
+      });
+    }
   };
 
   return (
@@ -90,14 +108,15 @@ export default function Home() {
         <LoginForm
           isOpen={isAuthOpen}
           onClose={closeAuth}
-          onSuccess={handleAuthSuccess}
+          onSuccess={(email: string, password: string) => handleAuthSuccess(email, password)}
+          formState={formState}
         />
       )}
       {isAuthOpen && authMode === "signup" && (
         <SignUpForm
           isOpen={isAuthOpen}
           onClose={closeAuth}
-          onSuccess={handleAuthSuccess}
+          onSuccess={(email: string, password: string) => handleAuthSuccess(email, password)}
         />
       )}
     </div>

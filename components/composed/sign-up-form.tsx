@@ -18,7 +18,7 @@ import { SignUpFormSchema, FormState } from "@/app/lib/definitions";
 interface SignUpFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: () => void;
+  onSuccess: (email: string, password: string) => Promise<void>;
 }
 
 export function SignUpForm({ isOpen, onClose, onSuccess }: SignUpFormProps) {
@@ -49,9 +49,8 @@ export function SignUpForm({ isOpen, onClose, onSuccess }: SignUpFormProps) {
     const { name, email, password } = validatedFields.data;
 
     try {
-      await account.create(ID.unique(), email, password, name);
-      await account.createSession(email, password);
-      onSuccess();
+      await onSuccess(email, password);
+      // The onClose() call has been moved to the parent component (app/page.tsx)
     } catch (error: any) {
       if (error.code === 400) {
         setFormState({
