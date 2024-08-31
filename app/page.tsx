@@ -7,14 +7,19 @@ import {
   LockClosedIcon,
   FolderIcon,
   ChartBarIcon,
+  RocketLaunchIcon,
+  LightBulbIcon,
+  ChartPieIcon,
 } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { LoginForm } from "../components/composed/login-form";
 import { SignUpForm } from "../components/composed/sign-up-form";
+import { Input } from "../components/input";
 
 export default function Home() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
+  const [email, setEmail] = useState("");
 
   const openAuth = (mode: "login" | "signup") => {
     setAuthMode(mode);
@@ -30,8 +35,15 @@ export default function Home() {
     // Add any additional logic for successful authentication
   };
 
+  const handleEmailSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Add logic to handle email submission
+    console.log("Email submitted:", email);
+    setEmail("");
+  };
+
   return (
-    <div className="flex flex-col items-center text-center">
+    <div className="flex flex-col items-center justify-center px-4 py-8 text-center">
       <h1 className="mb-6 text-6xl font-bold leading-tight text-zinc-900 dark:text-white">
         Welcome to RankFlow.
         <br />
@@ -66,7 +78,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="mb-16 flex flex-col gap-4">
         <Button color="blue" onClick={() => openAuth("signup")}>
           Get Started for Free
         </Button>
@@ -74,15 +86,14 @@ export default function Home() {
           Log in
         </Button>
       </div>
-
-      {authMode === "login" && (
+      {isAuthOpen && authMode === "login" && (
         <LoginForm
           isOpen={isAuthOpen}
           onClose={closeAuth}
           onSuccess={handleAuthSuccess}
         />
       )}
-      {authMode === "signup" && (
+      {isAuthOpen && authMode === "signup" && (
         <SignUpForm
           isOpen={isAuthOpen}
           onClose={closeAuth}

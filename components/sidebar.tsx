@@ -136,3 +136,23 @@ export const SidebarItem = forwardRef(function SidebarItem(
 export function SidebarLabel({ className, ...props }: React.ComponentPropsWithoutRef<'span'>) {
   return <span {...props} className={clsx(className, 'truncate')} />
 }
+
+export function SidebarItemPlaceholder({ className, children, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+  let classes = clsx(
+    className,
+    // Base
+    'flex w-full items-center gap-3 rounded-lg px-2 py-2.5 text-left text-base/6 font-medium sm:py-2 sm:text-sm/5',
+    // Leading icon/icon-only
+    'data-[slot=icon]:*:size-6 data-[slot=icon]:*:shrink-0 sm:data-[slot=icon]:*:size-5',
+    // Trailing icon (down chevron or similar)
+    'data-[slot=icon]:last:*:ml-auto data-[slot=icon]:last:*:size-5 sm:data-[slot=icon]:last:*:size-4',
+    // Avatar
+    'data-[slot=avatar]:*:-m-0.5 data-[slot=avatar]:*:size-7 sm:data-[slot=avatar]:*:size-6'
+  )
+
+  return (
+    <div {...props} className={classes}>
+      {children}
+    </div>
+  )
+}

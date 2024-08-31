@@ -26,6 +26,7 @@ import {
   SidebarHeader,
   SidebarHeading,
   SidebarItem,
+  SidebarItemPlaceholder,
   SidebarLabel,
   SidebarSection,
   SidebarSpacer,
@@ -261,9 +262,9 @@ export default function RootLayout({
                       <SparklesIcon />
                       <SidebarLabel>Changelog</SidebarLabel>
                     </SidebarItem>
-                    <SidebarItem>
+                    <SidebarItemPlaceholder>
                       <ThemeToggle />
-                    </SidebarItem>
+                    </SidebarItemPlaceholder>
                   </SidebarSection>
                 </SidebarBody>
                 <SidebarFooter>
