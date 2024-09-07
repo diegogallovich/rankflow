@@ -1,46 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
-import { Spinner } from '@/components/ui/spinner';
+import { redirect } from 'next/navigation';
 
-export default function AccountPage() {
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
-  const supabase = createClientComponentClient();
-
-  useEffect(() => {
-    async function getUser() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        setUser(user);
-      } else {
-        router.push('/login');
-      }
-      setLoading(false);
-    }
-    getUser();
-  }, [router, supabase.auth]);
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push('/');
-  };
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Spinner />
-      </div>
-    );
-  }
+export default async function AccountPage() {
+  const supabase = createServerComponentClient({ cookies });
+  const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    return null; // This shouldn't happen as we redirect to login, but just in case
+    // Redirect to login page if user is not authenticated
+    return redirect('/login');
   }
 
   return (
@@ -59,16 +31,18 @@ export default function AccountPage() {
 
       <div className="mb-6">
         <Text className="text-lg font-semibold">Last sign in:</Text>
-        <Text>{new Date(user.last_sign_in_at).toLocaleDateString()}</Text>
+        <Text>{user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleDateString() : 'N/A'}</Text>
       </div>
 
       <div className="space-y-4">
-        <Button onClick={() => router.push('/account/change-password')}>
+        <Button href="/account/change-password">
           Change Password
         </Button>
-        <Button outline onClick={handleSignOut}>
-          Sign Out
-        </Button>
+        <form action="/api/auth/sign-out" method="post">
+          <Button type="submit" outline>
+            Sign Out
+          </Button>
+        </form>
       </div>
     </div>
   );
