@@ -14,6 +14,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
+
 RUN npm run build
 
 # Production image, copy all the files and run next

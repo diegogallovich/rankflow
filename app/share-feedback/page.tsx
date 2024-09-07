@@ -7,8 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Text } from '@/components/ui/text';
 import { Textarea } from '@/components/ui/textarea';
 
-export const dynamic = 'force-dynamic';
-
 export default function ShareFeedbackPage() {
   const [feedback, setFeedback] = useState('');
   const [email, setEmail] = useState('');
