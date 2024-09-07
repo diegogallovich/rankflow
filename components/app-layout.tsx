@@ -3,6 +3,8 @@
 // React & Next imports
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 // 3rd party imports
 import {
   UserCircleIcon,
@@ -41,41 +43,15 @@ import {
 import { Avatar } from '@/components/ui/avatar';
 import { Navbar, NavbarSection, NavbarSpacer } from '@/components/ui/navbar';
 import { SidebarItemPlaceholder } from '@/components/ui/sidebar';
-import { AuthDialog } from '@/components/auth-dialog';
-
 // Components
 import { ThemeToggle } from '@/components/theme-toggle';
 
-function AccountDropdownMenu({ anchor }: { anchor: 'top start' | 'bottom end' }) {
-  return (
-    <DropdownMenu className='min-w-64' anchor={anchor}>
-      <DropdownItem href='/account'>
-        <UserCircleIcon />
-        <DropdownLabel>My account</DropdownLabel>
-      </DropdownItem>
-      <DropdownDivider />
-      <DropdownItem href='/privacy-policy'>
-        <ShieldCheckIcon />
-        <DropdownLabel>Privacy policy</DropdownLabel>
-      </DropdownItem>
-      <DropdownItem href='/share-feedback'>
-        <LightBulbIcon />
-        <DropdownLabel>Share feedback</DropdownLabel>
-      </DropdownItem>
-      <DropdownDivider />
-      <DropdownItem href='#'>
-        <ArrowRightStartOnRectangleIcon />
-        <DropdownLabel>Sign out</DropdownLabel>
-      </DropdownItem>
-    </DropdownMenu>
-  );
-}
+import { User as SupabaseUser } from '@supabase/supabase-js';
 
-type User = {
-  name: string;
-  email: string;
-  initials: string;
-} | null;
+type User = SupabaseUser & {
+  name?: string;
+  initials?: string;
+};
 
 type Collection = {
   id: string;
@@ -90,13 +66,16 @@ type Site = {
 
 export default function AppLayout({
   children,
-  sites,
   user,
+  sites,
 }: {
   children: React.ReactNode;
   user: User | null;
   sites: Array<Site> | null;
 }) {
+  const router = useRouter();
+  const supabase = createClientComponentClient();
+
   const pathname = usePathname();
 
   const [currentSite, setCurrentSite] = useState<Site | null>(null);
@@ -109,6 +88,36 @@ export default function AppLayout({
     setIsAuthDialogOpen(true);
   };
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    router.refresh();
+  };
+
+  function AccountDropdownMenu({ anchor, handleSignOut }: { anchor: 'top start' | 'bottom end', handleSignOut: () => Promise<void> }) {
+    return (
+      <DropdownMenu className='min-w-64' anchor={anchor}>
+        <DropdownItem href='/account'>
+          <UserCircleIcon />
+          <DropdownLabel>My account</DropdownLabel>
+        </DropdownItem>
+        <DropdownDivider />
+        <DropdownItem href='/privacy-policy'>
+          <ShieldCheckIcon />
+          <DropdownLabel>Privacy policy</DropdownLabel>
+        </DropdownItem>
+        <DropdownItem href='/share-feedback'>
+          <LightBulbIcon />
+          <DropdownLabel>Share feedback</DropdownLabel>
+        </DropdownItem>
+        <DropdownDivider />
+        <DropdownItem onClick={handleSignOut}>
+          <ArrowRightStartOnRectangleIcon />
+          <DropdownLabel>Sign out</DropdownLabel>
+        </DropdownItem>
+      </DropdownMenu>
+    );
+  }
+
   return (
     <SidebarLayout
       navbar={
@@ -120,7 +129,7 @@ export default function AppLayout({
                 <DropdownButton>
                   <Avatar initials={user.initials} />
                 </DropdownButton>
-                <AccountDropdownMenu anchor='bottom end' />
+                <AccountDropdownMenu anchor='bottom end' handleSignOut={handleSignOut} />
               </Dropdown>
             ) : (
               <Dropdown>
@@ -242,7 +251,7 @@ export default function AppLayout({
                 <ChevronUpIcon />
               </DropdownButton>
               {user ? (
-                <AccountDropdownMenu anchor='top start' />
+                <AccountDropdownMenu anchor='top start' handleSignOut={handleSignOut} />
               ) : (
                 <DropdownMenu>
                   <DropdownItem onClick={() => openAuthDialog('signup')}>
@@ -261,11 +270,6 @@ export default function AppLayout({
       }
     >
       {children}
-      <AuthDialog
-        isOpen={isAuthDialogOpen}
-        onClose={() => setIsAuthDialogOpen(false)}
-        initialMode={authDialogMode}
-      />
     </SidebarLayout>
   );
 }
