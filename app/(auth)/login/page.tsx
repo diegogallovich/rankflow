@@ -56,7 +56,7 @@ export default function LoginPage() {
         <TextLink href="/reset-password">Forgot your password?</TextLink>
       </Text>
       <Text className="mt-4">
-        Don't have an account? <TextLink href="/sign-up">Sign up</TextLink>
+        Don&apos;t have an account? <TextLink href="/sign-up">Sign up</TextLink>
       </Text>
     </div>
   );

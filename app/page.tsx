@@ -33,7 +33,7 @@ export default function Home() {
       <header className="mb-20">
         <h1 className="text-4xl font-bold tracking-tight sm:text-6xl max-w-2xl">
           <span className="bg-zinc-700 text-white dark:bg-white dark:text-zinc-900">
-            Add AI to Webflow's CMS
+            Add AI to Webflow&apos;s CMS
           </span>
           {' Rank Higher in Search Engines'}
         </h1>
@@ -79,7 +79,7 @@ export default function Home() {
           <li>Mistral</li>
         </ul>
         <Text>
-          While it's possible to replicate our workflow using individual AI subscriptions, Rankflow offers a streamlined, continuously updated solution. We handle the complexities of prompt engineering, model selection, and feature development, allowing you to focus on creating great content.
+          While it&apos;s possible to replicate our workflow using individual AI subscriptions, Rankflow offers a streamlined, continuously updated solution. We handle the complexities of prompt engineering, model selection, and feature development, allowing you to focus on creating great content.
         </Text>
       </section>
 
