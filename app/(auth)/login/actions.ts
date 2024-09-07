@@ -1,24 +1,43 @@
 'use server';
 
+import { z } from 'zod';
 import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
 
-export async function signIn(formData: FormData) {
-  const supabase = createClient();
+const LoginSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(1, 'Password is required'),
+});
 
-  const email = formData.get('email') as string;
-  const password = formData.get('password') as string;
-
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
+export async function signIn(prevState: any, formData: FormData) {
+  const validatedFields = LoginSchema.safeParse({
+    email: formData.get('email'),
+    password: formData.get('password'),
   });
 
-  if (error) {
-    redirect('/error');
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Invalid fields. Please check your input.',
+    };
   }
 
-  redirect('/');
+  const { email, password } = validatedFields.data;
+  const supabase = createClient();
+
+  try {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      return { message: error.message };
+    }
+
+    return { success: true };
+  } catch (error) {
+    return { message: 'An unexpected error occurred. Please try again.' };
+  }
 }
 
 // Alias for backwards compatibility

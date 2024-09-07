@@ -1,20 +1,38 @@
 'use server';
 
-import { redirect } from 'next/navigation';
+import { z } from 'zod';
 import { createClient } from '@/utils/supabase/server';
 
-export async function resetPassword(formData: FormData) {
-  const supabase = createClient();
+const ResetPasswordSchema = z.object({
+  email: z.string().email('Invalid email address'),
+});
 
-  const email = formData.get('email') as string;
-
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?next=/update-password`,
+export async function resetPassword(prevState: any, formData: FormData) {
+  const validatedFields = ResetPasswordSchema.safeParse({
+    email: formData.get('email'),
   });
 
-  if (error) {
-    redirect('/error');
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Invalid email address. Please check your input.',
+    };
   }
 
-  redirect('/check-email');
+  const { email } = validatedFields.data;
+  const supabase = createClient();
+
+  try {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?next=/update-password`,
+    });
+
+    if (error) {
+      return { message: error.message };
+    }
+
+    return { success: true };
+  } catch (error) {
+    return { message: 'An unexpected error occurred. Please try again.' };
+  }
 }
