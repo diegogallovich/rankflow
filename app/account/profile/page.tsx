@@ -20,7 +20,7 @@ export default function Profile() {
       }
     }
     getUser();
-  }, [router]);
+  }, [router, supabase.auth]);
 
   if (!email) {
     return <Text>Loading...</Text>;
