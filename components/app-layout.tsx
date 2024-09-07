@@ -229,6 +229,10 @@ export default function AppLayout({
                 <SparklesIcon />
                 <SidebarLabel>Changelog</SidebarLabel>
               </SidebarItem>
+              <SidebarItem href='/share-feedback' current={pathname === '/share-feedback'}>
+                <LightBulbIcon />
+                <SidebarLabel>Share Feedback</SidebarLabel>
+              </SidebarItem>
               <SidebarItemPlaceholder>
                 <ThemeToggle />
               </SidebarItemPlaceholder>
