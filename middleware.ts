@@ -10,22 +10,35 @@ export async function middleware(request: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession()
 
-  // List of public routes that don't require authentication
-  const publicRoutes = ['/login', '/sign-up', '/reset-password', '/auth/callback', '/']
+  // Updated list of public routes that don't require authentication
+  const publicRoutes = [
+    '/',
+    '/login',
+    '/sign-up',
+    '/reset-password',
+    '/auth/callback',
+    '/changelog',
+    '/share-feedback',
+    '/privacy-policy'
+  ]
 
-  if (!session) {
-    // If there's no session, check if there's an existing user
-    const { data: { user } } = await supabase.auth.getUser()
+  // Check if the current path is a public route
+  const isPublicRoute = publicRoutes.some(route => 
+    request.nextUrl.pathname === route || request.nextUrl.pathname.startsWith(`${route}/`)
+  )
 
-    if (user && !publicRoutes.includes(request.nextUrl.pathname)) {
-      // If there's a user but no session, redirect to the login page
-      return NextResponse.redirect(new URL('/login', request.url))
-    } else if (!user && !publicRoutes.includes(request.nextUrl.pathname)) {
-      // If there's no user and no session, and it's not a public route, redirect to home page
-      return NextResponse.redirect(new URL('/', request.url))
-    }
+  // If it's a public route, allow access without any checks
+  if (isPublicRoute) {
+    return res
   }
 
+  // For non-public routes, check for authentication
+  if (!session) {
+    // If there's no session, redirect to the login page
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
+
+  // If there's a session, allow access to the requested page
   return res
 }
 

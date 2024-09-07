@@ -8,31 +8,35 @@ type ChangelogEntry = {
 
 const changelogData: ChangelogEntry[] = [
   {
-    version: "1.1.0",
-    date: "2024-03-15",
+    version: "0.2.0",
+    date: "2023-09-07",
     changes: [
-      "Added support for multiple Webflow sites",
-      "Improved AI content generation accuracy",
-      "Fixed bug in keyword targeting feature"
+      "Added public changelog page",
+      "Implemented feedback submission feature",
+      "Created privacy policy page",
+      "Improved middleware to handle public and authenticated routes",
+      "Enhanced app layout with sidebar navigation",
+      "Integrated Supabase authentication",
+      "Added dark mode support"
     ]
   },
   {
-    version: "1.0.1",
-    date: "2024-02-28",
+    version: "0.1.1",
+    date: "2023-09-06",
     changes: [
-      "Performance improvements for large collections",
-      "UI enhancements for better user experience",
-      "Bug fixes and stability improvements"
+      "Set up basic Next.js project structure",
+      "Implemented initial UI components",
+      "Created placeholder pages for key features",
+      "Added Tailwind CSS for styling"
     ]
   },
   {
-    version: "1.0.0",
-    date: "2024-02-01",
+    version: "0.1.0",
+    date: "2023-09-05",
     changes: [
-      "Initial release of Rankflow",
-      "Basic AI-powered content optimization",
-      "Integration with Webflow CMS",
-      "Keyword targeting feature"
+      "Initial project setup",
+      "Created project repository",
+      "Defined basic project requirements and features"
     ]
   }
 ];

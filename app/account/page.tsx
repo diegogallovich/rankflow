@@ -66,7 +66,7 @@ export default function AccountPage() {
         <Button onClick={() => router.push('/account/change-password')}>
           Change Password
         </Button>
-        <Button variant="outline" onClick={handleSignOut}>
+        <Button outline onClick={handleSignOut}>
           Sign Out
         </Button>
       </div>
