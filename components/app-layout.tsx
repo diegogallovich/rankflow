@@ -41,6 +41,7 @@ import {
 import { Avatar } from '@/components/ui/avatar';
 import { Navbar, NavbarSection, NavbarSpacer } from '@/components/ui/navbar';
 import { SidebarItemPlaceholder } from '@/components/ui/sidebar';
+import { AuthDialog } from '@/components/auth-dialog';
 
 // Components
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -100,6 +101,14 @@ export default function AppLayout({
 
   const [currentSite, setCurrentSite] = useState<Site | null>(null);
 
+  const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
+  const [authDialogMode, setAuthDialogMode] = useState<'login' | 'signup'>('login');
+
+  const openAuthDialog = (mode: 'login' | 'signup') => {
+    setAuthDialogMode(mode);
+    setIsAuthDialogOpen(true);
+  };
+
   return (
     <SidebarLayout
       navbar={
@@ -119,11 +128,11 @@ export default function AppLayout({
                   <Avatar initials='GU' />
                 </DropdownButton>
                 <DropdownMenu>
-                  <DropdownItem>
+                  <DropdownItem onClick={() => openAuthDialog('signup')}>
                     <UserCircleIcon />
                     <DropdownLabel>Sign Up</DropdownLabel>
                   </DropdownItem>
-                  <DropdownItem>
+                  <DropdownItem onClick={() => openAuthDialog('login')}>
                     <UserCircleIcon />
                     <DropdownLabel>Log In</DropdownLabel>
                   </DropdownItem>
@@ -236,11 +245,11 @@ export default function AppLayout({
                 <AccountDropdownMenu anchor='top start' />
               ) : (
                 <DropdownMenu>
-                  <DropdownItem>
+                  <DropdownItem onClick={() => openAuthDialog('signup')}>
                     <UserCircleIcon />
                     <DropdownLabel>Sign Up</DropdownLabel>
                   </DropdownItem>
-                  <DropdownItem>
+                  <DropdownItem onClick={() => openAuthDialog('login')}>
                     <UserCircleIcon />
                     <DropdownLabel>Log In</DropdownLabel>
                   </DropdownItem>
@@ -252,6 +261,11 @@ export default function AppLayout({
       }
     >
       {children}
+      <AuthDialog
+        isOpen={isAuthDialogOpen}
+        onClose={() => setIsAuthDialogOpen(false)}
+        initialMode={authDialogMode}
+      />
     </SidebarLayout>
   );
 }
