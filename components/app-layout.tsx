@@ -90,6 +90,7 @@ export default function AppLayout({
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
+    router.push('/login');
     router.refresh();
   };
 
@@ -137,11 +138,11 @@ export default function AppLayout({
                   <Avatar initials='GU' />
                 </DropdownButton>
                 <DropdownMenu>
-                  <DropdownItem onClick={() => openAuthDialog('signup')}>
+                  <DropdownItem href="/sign-up">
                     <UserCircleIcon />
                     <DropdownLabel>Sign Up</DropdownLabel>
                   </DropdownItem>
-                  <DropdownItem onClick={() => openAuthDialog('login')}>
+                  <DropdownItem href="/login">
                     <UserCircleIcon />
                     <DropdownLabel>Log In</DropdownLabel>
                   </DropdownItem>
@@ -254,11 +255,11 @@ export default function AppLayout({
                 <AccountDropdownMenu anchor='top start' handleSignOut={handleSignOut} />
               ) : (
                 <DropdownMenu>
-                  <DropdownItem onClick={() => openAuthDialog('signup')}>
+                  <DropdownItem href="/sign-up">
                     <UserCircleIcon />
                     <DropdownLabel>Sign Up</DropdownLabel>
                   </DropdownItem>
-                  <DropdownItem onClick={() => openAuthDialog('login')}>
+                  <DropdownItem href="/login">
                     <UserCircleIcon />
                     <DropdownLabel>Log In</DropdownLabel>
                   </DropdownItem>
