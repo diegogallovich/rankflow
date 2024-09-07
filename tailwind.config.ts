@@ -6,6 +6,7 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       backgroundImage: {
@@ -13,10 +14,11 @@ const config: Config = {
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       fontFamily: {
-        sans: ['Inter, sans-serif', { fontFeatureSettings: '"cv11"' }],
+        sans: ['Inter', 'sans-serif'],
       },
     },
   },
   plugins: [],
 };
+
 export default config;
