@@ -48,6 +48,11 @@ Before you begin, ensure you have the following installed:
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
+6. Make Husky hooks executable:
+   ```
+   chmod ug+x .husky/*
+   ```
+
 ## Environment Variables
 
 Create a `.env.local` file in the root directory with the following variables:

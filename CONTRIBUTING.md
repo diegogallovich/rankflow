@@ -27,7 +27,7 @@ By participating in this project, you are expected to uphold our Code of Conduct
 
 ## Development Setup
 
-Follow the instructions in the README.md file to set up your development environment.
+Follow the instructions in the README.md file to set up your development environment. Additionally, ensure that Husky hooks are executable:
 
 ## Coding Standards
 
