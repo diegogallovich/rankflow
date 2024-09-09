@@ -2,8 +2,11 @@
 
 // React & Next imports
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
+import Image from 'next/image';
+
 // 3rd party imports
 import {
   UserCircleIcon,
@@ -72,10 +75,14 @@ export default function AppLayout({
   sites: Array<Site> | null;
 }) {
   const router = useRouter();
-
   const pathname = usePathname();
-
+  const { resolvedTheme, theme } = useTheme();
   const [currentSite, setCurrentSite] = useState<Site | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSignOut = async () => {
     router.push('/login');
@@ -148,6 +155,20 @@ export default function AppLayout({
       sidebar={
         <Sidebar>
           <SidebarHeader>
+            <SidebarItemPlaceholder>
+              {mounted && (
+                <Image
+                  src={resolvedTheme === 'dark' ? '/logotype-light.svg' : '/logotype-dark.svg'}
+                  alt="Rankflow Logo"
+                  width={120}
+                  height={28}
+                  priority
+                />
+              )}
+            </SidebarItemPlaceholder>
+            
+            <SidebarSpacer />
+
             <Dropdown>
               <DropdownButton as={SidebarItem}>
                 <SidebarLabel>{currentSite?.name ?? 'Select a site'}</SidebarLabel>

@@ -12,9 +12,9 @@ export const metadata: Metadata = {
   description: "RankFlow is a tool that allows you to use AI with Webflow's CMS to get better search results.",
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AppLayout user={null} sites={null}>
