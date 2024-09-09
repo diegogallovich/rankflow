@@ -3,8 +3,6 @@ import { Inter } from 'next/font/google';
 import '@/app/globals.css';
 import AppLayout from '@/components/app-layout';
 import { ThemeProvider } from '@/components/theme-provider';
-import { Toaster } from 'sonner';
-
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -19,7 +17,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AppLayout user={null} sites={null}>
             {children}
-            <Toaster />
           </AppLayout>
         </ThemeProvider>
       </body>
