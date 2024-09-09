@@ -24,18 +24,18 @@ export function ThemeToggle() {
   };
 
   return (
-    <div className='flex items-center justify-between w-full'>
-      <span className='flex items-center'>
+    <div className="flex w-full items-center justify-between">
+      <span className="flex items-center">
         {isDark ? (
-          <MoonIcon className='h-5 w-5 mr-3 text-zinc-400' />
+          <MoonIcon className="mr-3 h-5 w-5 text-zinc-400" />
         ) : (
-          <SunIcon className='h-5 w-5 mr-3 text-zinc-500' />
+          <SunIcon className="mr-3 h-5 w-5 text-zinc-500" />
         )}
-        <span className='text-sm font-medium text-zinc-950 dark:text-white'>
+        <span className="text-sm font-medium text-zinc-950 dark:text-white">
           {isDark ? 'Dark' : 'Light'} Mode
         </span>
       </span>
-      <Switch checked={isDark} onChange={toggleTheme} color='dark/zinc' />
+      <Switch checked={isDark} onChange={toggleTheme} color="dark/zinc" />
     </div>
   );
 }

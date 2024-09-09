@@ -2,6 +2,6 @@
 const nextConfig = {
   output: 'standalone',
   // ... other existing configurations
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

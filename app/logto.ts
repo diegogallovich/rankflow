@@ -4,6 +4,5 @@ export const logtoConfig = {
   appSecret: process.env.LOGTO_APP_SECRET!,
   baseUrl: process.env.NEXT_PUBLIC_SITE_URL!,
   cookieSecret: process.env.LOGTO_COOKIE_SECRET!,
-    cookieSecure: process.env.NODE_ENV === 'production',
-  
+  cookieSecure: process.env.NODE_ENV === 'production',
 };

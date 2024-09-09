@@ -1,7 +1,7 @@
-import * as Headless from '@headlessui/react'
-import clsx from 'clsx'
-import React, { forwardRef } from 'react'
-import { Link } from './link'
+import * as Headless from '@headlessui/react';
+import clsx from 'clsx';
+import React, { forwardRef } from 'react';
+import { Link } from './link';
 
 const styles = {
   base: [
@@ -156,30 +156,30 @@ const styles = {
       '[--btn-icon:theme(colors.rose.300)] data-[active]:[--btn-icon:theme(colors.rose.200)] data-[hover]:[--btn-icon:theme(colors.rose.200)]',
     ],
   },
-}
+};
 
-type ButtonProps = (
+export type ButtonProps = (
   | { color?: keyof typeof styles.colors; outline?: never; plain?: never }
   | { color?: never; outline: true; plain?: never }
   | { color?: never; outline?: never; plain: true }
-) & { className?: string; children: React.ReactNode } & (
+) & { className?: string; children?: React.ReactNode } & (
     | Omit<Headless.ButtonProps, 'as' | 'className'>
     | Omit<React.ComponentPropsWithoutRef<typeof Link>, 'className'>
-  )
+  );
 
 export const Button = forwardRef(function Button(
   { color, outline, plain, className, children, ...props }: ButtonProps,
   ref: React.ForwardedRef<HTMLElement>
 ) {
-  let classes = clsx(
+  const classes = clsx(
     className,
     styles.base,
-    outline 
-      ? styles.outline 
-      : plain 
-        ? styles.plain 
-        : clsx(styles.solid, styles.colors[color ?? 'dark/zinc'])
-  )
+    outline
+      ? styles.outline
+      : plain
+      ? styles.plain
+      : clsx(styles.solid, styles.colors[color ?? 'dark/zinc'])
+  );
 
   return 'href' in props ? (
     <Link {...props} className={classes} ref={ref as React.ForwardedRef<HTMLAnchorElement>}>
@@ -189,8 +189,8 @@ export const Button = forwardRef(function Button(
     <Headless.Button {...props} className={clsx(classes, 'cursor-default')} ref={ref}>
       <TouchTarget>{children}</TouchTarget>
     </Headless.Button>
-  )
-})
+  );
+});
 
 /**
  * Expand the hit area to at least 44×44px on touch devices
@@ -204,5 +204,5 @@ export function TouchTarget({ children }: { children: React.ReactNode }) {
       />
       {children}
     </>
-  )
+  );
 }

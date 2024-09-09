@@ -1,7 +1,13 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
-import { Dialog, DialogTitle, DialogDescription, DialogBody, DialogActions } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogTitle,
+  DialogDescription,
+  DialogBody,
+  DialogActions,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -25,7 +31,8 @@ export function WaitlistDialog({ isOpen, onClose }: WaitlistDialogProps) {
     <Dialog open={isOpen} onClose={onClose}>
       <DialogTitle>Join the Self-Hosted Waitlist</DialogTitle>
       <DialogDescription>
-        Be the first to know when our self-hosted option becomes available. Sign up for our waitlist to receive updates and early access.
+        Be the first to know when our self-hosted option becomes available. Sign up for our waitlist
+        to receive updates and early access.
       </DialogDescription>
       <DialogBody>
         <form onSubmit={handleSubmit}>
@@ -38,7 +45,7 @@ export function WaitlistDialog({ isOpen, onClose }: WaitlistDialogProps) {
             className="mb-4"
           />
           <DialogActions>
-            <Button type='button' onClick={onClose} plain>
+            <Button type="button" onClick={onClose} plain>
               Cancel
             </Button>
             <Button type="submit">Join Waitlist</Button>
@@ -49,7 +56,7 @@ export function WaitlistDialog({ isOpen, onClose }: WaitlistDialogProps) {
   );
 }
 
-export default function SelfHostedWaitlistButton () {
+export default function SelfHostedWaitlistButton() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
 
   const openWaitlist = () => setIsWaitlistOpen(true);

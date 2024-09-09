@@ -5,15 +5,17 @@ import { redirect } from 'next/navigation';
 
 export default async function Profile() {
   const supabase = createServerComponentClient({ cookies });
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   if (!user) {
     redirect('/login');
   }
 
   return (
-    <div className="max-w-2xl mx-auto mt-10">
-      <Text className="text-3xl font-bold mb-6">Welcome to your account profile, {user.email}</Text>
+    <div className="mx-auto mt-10 max-w-2xl">
+      <Text className="mb-6 text-3xl font-bold">Welcome to your account profile, {user.email}</Text>
     </div>
   );
 }
