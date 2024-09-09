@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from 'react';
 import { Dialog, DialogTitle, DialogDescription, DialogBody, DialogActions } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -44,5 +46,19 @@ export function WaitlistDialog({ isOpen, onClose }: WaitlistDialogProps) {
         </form>
       </DialogBody>
     </Dialog>
+  );
+}
+
+export default function SelfHostedWaitlistButton () {
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+
+  const openWaitlist = () => setIsWaitlistOpen(true);
+  const closeWaitlist = () => setIsWaitlistOpen(false);
+
+  return (
+    <>
+      <Button onClick={openWaitlist}>Join Waitlist</Button>
+      <WaitlistDialog isOpen={isWaitlistOpen} onClose={closeWaitlist} />
+    </>
   );
 }

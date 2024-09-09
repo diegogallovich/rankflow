@@ -1,32 +1,13 @@
-'use client';
-
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { getLogtoContext, signIn } from '@logto/next/server-actions';
+import { logtoConfig } from '@/app/logto';
 import { Text, TextLink, Strong } from '@/components/ui/text';
 import { Table, TableHead, TableBody, TableRow, TableHeader, TableCell } from '@/components/ui/table';
-import { useRouter } from 'next/navigation';
-import { WaitlistDialog } from '@/components/self-hosted-waitlist-dialog';
+import SelfHostedWaitlistButton, { WaitlistDialog } from '@/components/self-hosted-waitlist-dialog';
+import EmailListSubscriptionForm from '@/components/email-list-subscription-form';
+import SignIn from '@/components/sign-in';
 
-export default function Home() {
-  const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
-
-  const handleGetStarted = (plan?: string) => {
-    const url = plan ? `/sign-up?plan=${encodeURIComponent(plan)}` : '/sign-up';
-    router.push(url);
-  };
-
-  const handleEmailSignup = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Implement email signup logic
-    console.log('Email signup:', email);
-    setEmail('');
-  };
-
-  const openWaitlist = () => setIsWaitlistOpen(true);
-  const closeWaitlist = () => setIsWaitlistOpen(false);
+export default async function Home() {
+  const { isAuthenticated, claims } = await getLogtoContext(logtoConfig);
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 relative">
@@ -41,7 +22,12 @@ export default function Home() {
           Rankflow connects your Webflow Collections, making it easy to manage and optimize your content for search engines.
         </p>
         <div className="mt-6 flex items-center gap-x-6">
-          <Button onClick={() => handleGetStarted()}>Get Started For Free</Button>
+          <SignIn onSignIn={
+            async () => {
+              'use server';
+              await signIn(logtoConfig);
+            }
+          } cta="Get Started For Free" />
         </div>
       </header>
 
@@ -102,27 +88,21 @@ export default function Home() {
                 <TableCell>$20/mo</TableCell>
                 <TableCell>Up to 5</TableCell>
                 <TableCell>Unlimited generations, Unlimited websites</TableCell>
-                <TableCell>
-                  <Button onClick={() => handleGetStarted('Starter')}>Get Started with Starter</Button>
-                </TableCell>
+                <TableCell></TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Pro</TableCell>
                 <TableCell>$35/mo</TableCell>
                 <TableCell>Up to 10</TableCell>
                 <TableCell>Unlimited generations, Unlimited websites</TableCell>
-                <TableCell>
-                  <Button onClick={() => handleGetStarted('Pro')}>Get Started with Pro</Button>
-                </TableCell>
+                <TableCell></TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Business</TableCell>
                 <TableCell>$50/mo</TableCell>
                 <TableCell>Up to 20</TableCell>
                 <TableCell>Unlimited generations, Unlimited websites</TableCell>
-                <TableCell>
-                  <Button onClick={() => handleGetStarted('Business')}>Get Started with Business</Button>
-                </TableCell>
+                <TableCell></TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Self-hosted</TableCell>
@@ -130,7 +110,7 @@ export default function Home() {
                 <TableCell>Unlimited</TableCell>
                 <TableCell>Coming soon</TableCell>
                 <TableCell>
-                  <Button onClick={openWaitlist}>Join Waitlist</Button>
+                  <SelfHostedWaitlistButton />
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -165,25 +145,16 @@ export default function Home() {
         <Text className="mb-4">
           Subscribe to our newsletter for product updates, general SEO tips, and Webflow-specific SEO management advice to boost your success.
         </Text>
-        <form onSubmit={handleEmailSignup} className="flex gap-4">
-          <Input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <Button type="submit">Subscribe</Button>
-        </form>
+        <EmailListSubscriptionForm />
       </section>
 
       {/* Floating Login Button */}
       <div className="fixed bottom-4 right-4">
-        <Button outline onClick={() => router.push('/login')} >Login</Button>
+        <SignIn onSignIn={async () => {
+          'use server';
+          await signIn(logtoConfig);
+        }} />
       </div>
-
-      {/* Waitlist Dialog */}
-      <WaitlistDialog isOpen={isWaitlistOpen} onClose={closeWaitlist} />
     </div>
   );
 }

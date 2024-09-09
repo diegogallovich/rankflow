@@ -3,8 +3,7 @@ import { Inter } from 'next/font/google';
 import '@/app/globals.css';
 import AppLayout from '@/components/app-layout';
 import { ThemeProvider } from '@/components/theme-provider';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,15 +13,13 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const supabase = createServerComponentClient({ cookies });
-  const { data: { session } } = await supabase.auth.getSession();
-
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-          <AppLayout user={session?.user ?? null} sites={null}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <AppLayout user={null} sites={null}>
             {children}
+            <Toaster />
           </AppLayout>
         </ThemeProvider>
       </body>

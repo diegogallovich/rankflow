@@ -4,7 +4,6 @@
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 // 3rd party imports
 import {
   UserCircleIcon,
@@ -46,10 +45,9 @@ import { SidebarItemPlaceholder } from '@/components/ui/sidebar';
 // Components
 import { ThemeToggle } from '@/components/theme-toggle';
 
-import { User as SupabaseUser } from '@supabase/supabase-js';
-
-type User = SupabaseUser & {
+type User = {
   name?: string;
+  email?: string;
   initials?: string;
 };
 
@@ -74,22 +72,12 @@ export default function AppLayout({
   sites: Array<Site> | null;
 }) {
   const router = useRouter();
-  const supabase = createClientComponentClient();
 
   const pathname = usePathname();
 
   const [currentSite, setCurrentSite] = useState<Site | null>(null);
 
-  const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
-  const [authDialogMode, setAuthDialogMode] = useState<'login' | 'signup'>('login');
-
-  const openAuthDialog = (mode: 'login' | 'signup') => {
-    setAuthDialogMode(mode);
-    setIsAuthDialogOpen(true);
-  };
-
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
     router.push('/login');
     router.refresh();
   };
