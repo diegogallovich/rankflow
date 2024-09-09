@@ -35,3 +35,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Husky
+.husky/_
+
+# VS Code settings
+.vscode/settings.json
