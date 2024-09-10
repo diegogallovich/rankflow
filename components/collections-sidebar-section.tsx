@@ -3,6 +3,7 @@ import { logtoConfig } from '@/app/logto';
 import { SidebarSection, SidebarHeading, SidebarItem, SidebarLabel } from '@/components/ui/sidebar';
 import { PlusIcon } from '@heroicons/react/16/solid';
 import { headers } from 'next/headers';
+import { SignInSidebarItem } from '@/components/sign-in';
 
 const collectionsMock = [
   {
@@ -28,15 +29,16 @@ export default async function CollectionsSidebarSection() {
   return (
     <SidebarSection className="max-lg:hidden">
       <SidebarHeading>Collections</SidebarHeading>
-      {currentSiteMock?.collections.map((collection) => (
-        <SidebarItem
-          key={collection.id}
-          href={`/sites/${currentSiteMock.id}/collections/${collection.id}`}
-          current={pathname === `/sites/${currentSiteMock.id}/collections/${collection.id}`}
-        >
-          {collection.name}
-        </SidebarItem>
-      ))}
+      {isAuthenticated &&
+        currentSiteMock?.collections.map((collection) => (
+          <SidebarItem
+            key={collection.id}
+            href={`/sites/${currentSiteMock.id}/collections/${collection.id}`}
+            current={pathname === `/sites/${currentSiteMock.id}/collections/${collection.id}`}
+          >
+            {collection.name}
+          </SidebarItem>
+        ))}
 
       {isAuthenticated ? (
         <SidebarItem href={`/sites/${currentSiteMock.id}/collections/new`}>
@@ -44,15 +46,15 @@ export default async function CollectionsSidebarSection() {
           <SidebarLabel>Sync New Collection</SidebarLabel>
         </SidebarItem>
       ) : (
-        <SidebarItem
-          onClick={async () => {
+        <SignInSidebarItem
+          onSignIn={async () => {
             'use server';
             await signIn(logtoConfig);
           }}
         >
           <PlusIcon />
-          <SidebarLabel>Sign Up To Sync Collections</SidebarLabel>
-        </SidebarItem>
+          <SidebarLabel>Sign Up To Add</SidebarLabel>
+        </SignInSidebarItem>
       )}
     </SidebarSection>
   );

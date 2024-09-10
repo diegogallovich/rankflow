@@ -16,6 +16,7 @@ import {
   ShieldCheckIcon,
   UserCircleIcon,
 } from '@heroicons/react/16/solid';
+import { SignOutDropdownItem } from '@/components/sign-out';
 
 export default async function SidebarNavbar() {
   const { isAuthenticated } = await getLogtoContext(logtoConfig);
@@ -44,15 +45,15 @@ export default async function SidebarNavbar() {
                 <DropdownLabel>Share feedback</DropdownLabel>
               </DropdownItem>
               <DropdownDivider />
-              <DropdownItem
-                onClick={async () => {
+              <SignOutDropdownItem
+                onSignOut={async () => {
                   'use server';
                   await signOut(logtoConfig);
                 }}
               >
                 <ArrowRightStartOnRectangleIcon />
                 <DropdownLabel>Sign out</DropdownLabel>
-              </DropdownItem>
+              </SignOutDropdownItem>
             </DropdownMenu>
           </Dropdown>
         ) : (

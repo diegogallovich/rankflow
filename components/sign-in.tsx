@@ -3,6 +3,7 @@
 import { Button, ButtonProps } from '@/components/ui/button';
 import { DropdownItem } from '@/components/ui/dropdown';
 import { forwardRef } from 'react';
+import { SidebarItem } from '@/components/ui/sidebar';
 
 type SignInProps = ButtonProps & {
   onSignIn: () => Promise<void>;
@@ -41,6 +42,24 @@ export const SignInDropdownItem = function SignInDropdownItem({
     >
       {children || cta}
     </DropdownItem>
+  );
+};
+
+export const SignInSidebarItem = function SignInSidebarItem({
+  onSignIn,
+  cta = 'Sign In',
+  children,
+  ...props
+}: SignInProps) {
+  return (
+    <SidebarItem
+      onClick={() => {
+        onSignIn();
+      }}
+      {...props}
+    >
+      {children || cta}
+    </SidebarItem>
   );
 };
 

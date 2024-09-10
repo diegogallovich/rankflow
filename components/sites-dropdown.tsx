@@ -11,6 +11,7 @@ import {
 import { ChevronDownIcon, Cog8ToothIcon, PlusIcon } from '@heroicons/react/16/solid';
 import { SidebarItem, SidebarLabel } from '@/components/ui/sidebar';
 import { headers } from 'next/headers';
+import { SignInDropdownItem } from '@/components/sign-in';
 
 const sitesMock = [
   {
@@ -70,15 +71,15 @@ export default async function SitesDropdown() {
             </DropdownItem>
           </>
         ) : (
-          <DropdownItem
-            onClick={async () => {
+          <SignInDropdownItem
+            onSignIn={async () => {
               'use server';
               await signIn(logtoConfig);
             }}
           >
             <PlusIcon />
             <DropdownLabel>'Sign Up to create a site'</DropdownLabel>
-          </DropdownItem>
+          </SignInDropdownItem>
         )}
       </DropdownMenu>
     </Dropdown>

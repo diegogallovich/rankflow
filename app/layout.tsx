@@ -9,20 +9,14 @@ import {
   SidebarBody,
   SidebarFooter,
   SidebarHeader,
-  SidebarItem,
-  SidebarItemPlaceholder,
-  SidebarLabel,
   SidebarLogo,
-  SidebarSection,
   SidebarSpacer,
 } from '@/components/ui/sidebar';
 import SitesDropdown from '@/components/sites-dropdown';
 import CollectionsSidebarSection from '@/components/collections-sidebar-section';
-import { headers } from 'next/headers';
-import { LightBulbIcon, QuestionMarkCircleIcon, SparklesIcon } from '@heroicons/react/16/solid';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { SidebarAccountDropdown } from '@/components/sidebar-account-dropdown';
 import JsonLd from '@/components/json-ld';
+import SidebarSectionGlobalLinks from '@/components/sidebar-section-global-links';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -94,9 +88,6 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const headersList = headers();
-  const pathname = headersList.get('x-pathname');
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -121,23 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
                   <SidebarSpacer />
 
-                  <SidebarSection>
-                    <SidebarItem href="/support" current={pathname === '/support'}>
-                      <QuestionMarkCircleIcon />
-                      <SidebarLabel>Support</SidebarLabel>
-                    </SidebarItem>
-                    <SidebarItem href="/changelog" current={pathname === '/changelog'}>
-                      <SparklesIcon />
-                      <SidebarLabel>Changelog</SidebarLabel>
-                    </SidebarItem>
-                    <SidebarItem href="/share-feedback" current={pathname === '/share-feedback'}>
-                      <LightBulbIcon />
-                      <SidebarLabel>Share Feedback</SidebarLabel>
-                    </SidebarItem>
-                    <SidebarItemPlaceholder>
-                      <ThemeToggle />
-                    </SidebarItemPlaceholder>
-                  </SidebarSection>
+                  <SidebarSectionGlobalLinks />
                 </SidebarBody>
 
                 <SidebarFooter className="max-lg:hidden">
