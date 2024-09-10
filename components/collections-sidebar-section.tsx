@@ -14,6 +14,18 @@ const collectionsMock = [
     id: '2',
     name: 'Collection 2',
   },
+  {
+    id: '3',
+    name: 'Collection 3',
+  },
+  {
+    id: '4',
+    name: 'Collection 4',
+  },
+  {
+    id: '5',
+    name: 'Collection 5',
+  },
 ];
 
 const currentSiteMock = {
@@ -27,7 +39,7 @@ export default async function CollectionsSidebarSection() {
   const pathname = headersList.get('x-pathname');
 
   return (
-    <SidebarSection className="max-lg:hidden">
+    <SidebarSection>
       <SidebarHeading>Collections</SidebarHeading>
       {isAuthenticated &&
         currentSiteMock?.collections.map((collection) => (
