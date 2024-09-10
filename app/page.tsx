@@ -21,7 +21,7 @@ export default async function Home() {
     <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <header className="mb-20">
         <h1 className="max-w-2xl text-4xl font-bold tracking-tight sm:text-6xl">
-          <span className="bg-zinc-700 text-white dark:bg-white dark:text-zinc-900">
+          <span className="bg-zinc-800 text-white dark:bg-white dark:text-zinc-900">
             Add AI to Webflow&apos;s CMS
           </span>
           {' Rank Higher in Search Engines'}
