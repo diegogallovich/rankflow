@@ -63,6 +63,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     type: 'website',
   },
+  // TODO: Add Twitter card
   // twitter: {
   //   card: 'summary_large_image',
   //   title: "RankFlow | Use AI with Webflow's CMS",
@@ -77,6 +78,7 @@ export const metadata: Metadata = {
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
     ],
     apple: [{ url: '/apple-touch-icon.png' }],
+    // TODO: Add mask icon
     // other: [
     //   {
     //     rel: 'mask-icon',
