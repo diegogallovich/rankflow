@@ -119,28 +119,30 @@ export default async function Home() {
             <TableBody>
               <TableRow>
                 <TableCell>Starter</TableCell>
-                <TableCell>$20/mo</TableCell>
+                <TableCell>$40/mo</TableCell>
                 <TableCell>Up to 5</TableCell>
                 <TableCell>Unlimited generations, Unlimited websites</TableCell>
                 <TableCell></TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Pro</TableCell>
-                <TableCell>$35/mo</TableCell>
+                <TableCell>$60/mo</TableCell>
                 <TableCell>Up to 10</TableCell>
                 <TableCell>Unlimited generations, Unlimited websites</TableCell>
                 <TableCell></TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Business</TableCell>
-                <TableCell>$50/mo</TableCell>
+                <TableCell>$80/mo</TableCell>
                 <TableCell>Up to 20</TableCell>
-                <TableCell>Unlimited generations, Unlimited websites</TableCell>
+                <TableCell>
+                  Unlimited generations, Unlimited websites, Request new features
+                </TableCell>
                 <TableCell></TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Self-hosted</TableCell>
-                <TableCell>$200/Once</TableCell>
+                <TableCell>$300/Once</TableCell>
                 <TableCell>Unlimited</TableCell>
                 <TableCell>Coming soon</TableCell>
                 <TableCell>
