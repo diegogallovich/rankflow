@@ -7,11 +7,11 @@ import {
   DropdownItem,
   DropdownLabel,
   DropdownDivider,
-} from '@/components/ui/dropdown';
+} from '@/components/dropdown';
 import { ChevronDownIcon, Cog8ToothIcon, PlusIcon } from '@heroicons/react/16/solid';
-import { SidebarItem, SidebarLabel } from '@/components/ui/sidebar';
+import { SidebarItem, SidebarLabel } from '@/components/sidebar';
 import { headers } from 'next/headers';
-import { SignInDropdownItem } from '@/components/sign-in';
+import { SignInDropdownItem } from '@/app/ui/sign-in';
 
 const sitesMock = [
   {

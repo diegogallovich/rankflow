@@ -1,6 +1,6 @@
 import { getLogtoContext, signIn, signOut } from '@logto/next/server-actions';
 import { logtoConfig } from '@/app/logto';
-import { Navbar, NavbarSpacer, NavbarSection, NavbarItem } from '@/components/ui/navbar';
+import { Navbar, NavbarSpacer, NavbarSection, NavbarItem } from '@/components/navbar';
 import {
   Dropdown,
   DropdownButton,
@@ -8,15 +8,15 @@ import {
   DropdownItem,
   DropdownLabel,
   DropdownDivider,
-} from '@/components/ui/dropdown';
-import { Avatar } from '@/components/ui/avatar';
+} from '@/components/dropdown';
+import { Avatar } from '@/components/avatar';
 import {
   ArrowRightStartOnRectangleIcon,
   LightBulbIcon,
   ShieldCheckIcon,
   UserCircleIcon,
 } from '@heroicons/react/16/solid';
-import { SignOutDropdownItem } from '@/components/sign-out';
+import { SignOutDropdownItem } from '@/app/ui/sign-out';
 import { SignInDropdownItem } from './sign-in';
 
 export default async function SidebarNavbar() {

@@ -1,15 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/button';
 import {
   Dialog,
   DialogTitle,
   DialogDescription,
   DialogBody,
   DialogActions,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
+} from '@/components/dialog';
+import { Input } from '@/components/input';
 
 export function NotifyUsDialog() {
   const [isOpen, setIsOpen] = useState(false);

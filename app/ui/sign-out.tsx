@@ -1,7 +1,7 @@
 'use client';
 
-import { Button, ButtonProps } from '@/components/ui/button';
-import { DropdownItem } from '@/components/ui/dropdown';
+import { Button, ButtonProps } from '@/components/button';
+import { DropdownItem } from '@/components/dropdown';
 import { forwardRef } from 'react';
 
 type SignOutProps = ButtonProps & {

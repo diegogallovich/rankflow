@@ -1,18 +1,11 @@
 import { getLogtoContext, signIn } from '@logto/next/server-actions';
 import { logtoConfig } from '@/app/logto';
-import { Text, TextLink, Strong } from '@/components/ui/text';
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableHeader,
-  TableCell,
-} from '@/components/ui/table';
-import SelfHostedWaitlistButton from '@/components/self-hosted-waitlist-dialog';
-import EmailListSubscriptionForm from '@/components/email-list-subscription-form';
-import SignIn from '@/components/sign-in';
-import { Button } from '@/components/ui/button';
+import { Text, TextLink, Strong } from '@/components/text';
+import { Table, TableHead, TableBody, TableRow, TableHeader, TableCell } from '@/components/table';
+import SelfHostedWaitlistButton from '@/app/ui/self-hosted-waitlist-dialog';
+import EmailListSubscriptionForm from '@/app/ui/email-list-subscription-form';
+import SignIn from '@/app/ui/sign-in';
+import { Button } from '@/components/button';
 
 export default async function Home() {
   const { isAuthenticated } = await getLogtoContext(logtoConfig);

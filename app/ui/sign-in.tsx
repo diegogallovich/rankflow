@@ -1,9 +1,9 @@
 'use client';
 
-import { Button, ButtonProps } from '@/components/ui/button';
-import { DropdownItem } from '@/components/ui/dropdown';
+import { Button, ButtonProps } from '@/components/button';
+import { DropdownItem } from '@/components/dropdown';
 import { forwardRef } from 'react';
-import { SidebarItem } from '@/components/ui/sidebar';
+import { SidebarItem } from '@/components/sidebar';
 
 type SignInProps = ButtonProps & {
   onSignIn: () => Promise<void>;

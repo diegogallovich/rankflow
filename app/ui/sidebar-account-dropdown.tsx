@@ -7,9 +7,9 @@ import {
   DropdownItem,
   DropdownLabel,
   DropdownDivider,
-} from '@/components/ui/dropdown';
-import { SidebarItem } from '@/components/ui/sidebar';
-import { Avatar } from '@/components/ui/avatar';
+} from '@/components/dropdown';
+import { SidebarItem } from '@/components/sidebar';
+import { Avatar } from '@/components/avatar';
 import { ChevronUpIcon } from '@heroicons/react/16/solid';
 import {
   UserCircleIcon,
@@ -17,8 +17,8 @@ import {
   LightBulbIcon,
   ArrowRightStartOnRectangleIcon,
 } from '@heroicons/react/16/solid';
-import { SignInDropdownItem } from '@/components/sign-in';
-import { SignOutDropdownItem } from '@/components/sign-out';
+import { SignInDropdownItem } from '@/app/ui/sign-in';
+import { SignOutDropdownItem } from '@/app/ui/sign-out';
 
 export async function SidebarAccountDropdown() {
   const { isAuthenticated } = await getLogtoContext(logtoConfig);

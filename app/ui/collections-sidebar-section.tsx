@@ -1,9 +1,9 @@
 import { getLogtoContext, signIn } from '@logto/next/server-actions';
 import { logtoConfig } from '@/app/logto';
-import { SidebarSection, SidebarHeading, SidebarItem, SidebarLabel } from '@/components/ui/sidebar';
+import { SidebarSection, SidebarHeading, SidebarItem, SidebarLabel } from '@/components/sidebar';
 import { PlusIcon } from '@heroicons/react/16/solid';
 import { headers } from 'next/headers';
-import { SignInSidebarItem } from '@/components/sign-in';
+import { SignInSidebarItem } from '@/app/ui/sign-in';
 
 const collectionsMock = [
   {

@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Text } from '@/components/ui/text';
-import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/button';
+import { Input } from '@/components/input';
+import { Text } from '@/components/text';
+import { Textarea } from '@/components/textarea';
 
 export default function ShareFeedbackPage() {
   const [feedback, setFeedback] = useState('');

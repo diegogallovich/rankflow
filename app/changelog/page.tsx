@@ -1,4 +1,4 @@
-import { Text } from '@/components/ui/text';
+import { Text } from '@/components/text';
 
 type ChangelogEntry = {
   version: string;

@@ -7,9 +7,9 @@ import {
   DialogDescription,
   DialogBody,
   DialogActions,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+} from '@/components/dialog';
+import { Button } from '@/components/button';
+import { Input } from '@/components/input';
 
 interface WaitlistDialogProps {
   isOpen: boolean;
