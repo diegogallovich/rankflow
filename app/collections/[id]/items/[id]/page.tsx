@@ -1,10 +1,14 @@
 import { getLogtoContext } from '@logto/next/server-actions';
 import { logtoConfig } from '@/app/logto';
 import prisma from '@/lib/prisma';
-import { fetchWebflowItem } from '@/lib/webflow'; // You'll need to implement this function
+import { fetchWebflowItem } from '@/lib/webflow';
 import { CollectionItemForm } from '@/app/ui/collection-item-form';
 
-export default async function CollectionItemPage({ params }) {
+export default async function CollectionItemPage({
+  params,
+}: {
+  params: { id: string; itemId: string };
+}) {
   const { userInfo } = await getLogtoContext(logtoConfig);
   const userId = userInfo?.sub;
 
@@ -19,6 +23,14 @@ export default async function CollectionItemPage({ params }) {
 
   if (!collectionItem) {
     throw new Error('Collection item not found');
+  }
+
+  if (
+    !collectionItem.collection.site.webflowSiteId ||
+    !collectionItem.collection.site.webflowSiteToken ||
+    !collectionItem.webflowItemId
+  ) {
+    throw new Error('Missing required Webflow information');
   }
 
   const webflowItem = await fetchWebflowItem(
