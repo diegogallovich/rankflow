@@ -12,35 +12,30 @@ import { ChevronDownIcon, Cog8ToothIcon, PlusIcon } from '@heroicons/react/16/so
 import { SidebarItem, SidebarLabel } from '@/components/sidebar';
 import { headers } from 'next/headers';
 import { SignInDropdownItem } from '@/app/ui/sign-in';
-
-const sitesMock = [
-  {
-    id: '1',
-    name: 'Site 1',
-  },
-  {
-    id: '2',
-    name: 'Site 2',
-  },
-];
+import prisma from '@/lib/prisma';
+import { Site } from '@/lib/definitions';
 
 export default async function SitesDropdown() {
-  const { isAuthenticated } = await getLogtoContext(logtoConfig);
+  const { isAuthenticated, userInfo } = await getLogtoContext(logtoConfig);
   const headersList = headers();
   const pathname = headersList.get('x-pathname');
 
   // grab current site id from pathname
   const currentSiteId = pathname?.split('/')[2];
-  const currentSite = sitesMock.find((site) => site.id === currentSiteId);
 
-  // if it's authenticated, get the user's sites
-  // if not then show nudge copy
+  let sites: Site[] = [];
+  let currentSite: Site | null = null;
+
+  if (isAuthenticated && userInfo?.sub) {
+    sites = (await prisma.site.findMany({ where: { userId: userInfo.sub } })) as Site[];
+    currentSite = sites.find((site: Site) => site.id === currentSiteId) || sites[0] || null;
+  }
 
   return (
     <Dropdown>
       <DropdownButton as={SidebarItem}>
         {isAuthenticated ? (
-          <SidebarLabel>{currentSite ? currentSite.name : sitesMock[0].name}</SidebarLabel>
+          <SidebarLabel>{currentSite ? currentSite.name : 'Select a site'}</SidebarLabel>
         ) : (
           <SidebarLabel>Select a site</SidebarLabel>
         )}
@@ -50,14 +45,17 @@ export default async function SitesDropdown() {
       <DropdownMenu className="min-w-80 lg:min-w-64" anchor="bottom start">
         {isAuthenticated ? (
           <>
-            <DropdownItem href={`/sites/1`}>
-              <Cog8ToothIcon />
-              <DropdownLabel>Site Settings</DropdownLabel>
-            </DropdownItem>
+            {currentSite && (
+              <>
+                <DropdownItem href={`/sites/${currentSite.id}`}>
+                  <Cog8ToothIcon />
+                  <DropdownLabel>Site Settings</DropdownLabel>
+                </DropdownItem>
+                <DropdownDivider />
+              </>
+            )}
 
-            <DropdownDivider />
-
-            {sitesMock?.map((site) => (
+            {sites.map((site: Site) => (
               <DropdownItem key={site.id} href={`/sites/${site.id}`}>
                 <DropdownLabel>{site.name}</DropdownLabel>
               </DropdownItem>
@@ -78,7 +76,7 @@ export default async function SitesDropdown() {
             }}
           >
             <PlusIcon />
-            <DropdownLabel>'Sign Up to create a site'</DropdownLabel>
+            <DropdownLabel>Sign Up to create a site</DropdownLabel>
           </SignInDropdownItem>
         )}
       </DropdownMenu>

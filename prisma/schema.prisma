@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Site {
+  id                String           @id @default(cuid())
+  name              String
+  source            String
+  webflowSiteId     String?
+  context           String
+  webflowSiteToken  String?
+  userId            String
+  collections       Collection[]
+  collectionItems   CollectionItem[]
+  collectionFields  CollectionField[]
+  aiTransactions    AITransaction[]
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+}
+
+model Collection {
+  id                String           @id @default(cuid())
+  webflowCollectionId String?
+  name              String
+  context           String
+  site              Site             @relation(fields: [siteId], references: [id])
+  siteId            String
+  userId            String
+  items             CollectionItem[]
+  fields            CollectionField[]
+  aiTransactions    AITransaction[]
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+}
+
+model CollectionItem {
+  id                String           @id @default(cuid())
+  webflowItemId     String?
+  targetKeyword     String?
+  context           String?
+  status            String?
+  collection        Collection       @relation(fields: [collectionId], references: [id])
+  collectionId      String
+  site              Site             @relation(fields: [siteId], references: [id])
+  siteId            String
+  userId            String
+  aiTransactions    AITransaction[]
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+}
+
+model CollectionField {
+  id                String           @id @default(cuid())
+  webflowFieldId    String?
+  name              String
+  context           String?
+  collection        Collection       @relation(fields: [collectionId], references: [id])
+  collectionId      String
+  site              Site             @relation(fields: [siteId], references: [id])
+  siteId            String
+  userId            String
+  aiTransactions    AITransaction[]
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+}
+
+model AITransaction {
+  id                String           @id @default(cuid())
+  model             String
+  input             Int
+  output            Int
+  site              Site             @relation(fields: [siteId], references: [id])
+  siteId            String
+  collection        Collection?      @relation(fields: [collectionId], references: [id])
+  collectionId      String?
+  collectionItem    CollectionItem?  @relation(fields: [collectionItemId], references: [id])
+  collectionItemId  String?
+  collectionField   CollectionField? @relation(fields: [collectionFieldId], references: [id])
+  collectionFieldId String?
+  userId            String
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+}
