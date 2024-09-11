@@ -2,7 +2,6 @@ import { getLogtoContext } from '@logto/next/server-actions';
 import { logtoConfig } from '@/app/logto';
 import prisma from '@/lib/prisma';
 import { fetchWebflowItem } from '@/lib/webflow';
-import { CollectionItemForm } from '@/app/ui/collection-item-form';
 
 export default async function CollectionItemPage({
   params,
@@ -47,7 +46,7 @@ export default async function CollectionItemPage({
   return (
     <div>
       <h1 className="mb-6 text-2xl font-bold">Edit Collection Item: {webflowItem.name}</h1>
-      <CollectionItemForm initialData={combinedData} />
+      <pre>{JSON.stringify(combinedData, null, 2)}</pre>
     </div>
   );
 }
