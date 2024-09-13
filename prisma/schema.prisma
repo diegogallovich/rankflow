@@ -14,62 +14,70 @@ model Site {
   id                String           @id @default(cuid())
   name              String
   source            String
-  webflowSiteId     String?
+  webflowSiteId     String?          @map("webflow_site_id")
   context           String
-  webflowSiteToken  String?
-  userId            String
+  webflowSiteToken  String?          @map("webflow_site_token")
+  userId            String           @map("user_id")
   collections       Collection[]
   collectionItems   CollectionItem[]
   collectionFields  CollectionField[]
   aiTransactions    AITransaction[]
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  createdAt         DateTime         @default(now()) @map("created_at")
+  updatedAt         DateTime         @updatedAt @map("updated_at")
+
+  @@map("sites")
 }
 
 model Collection {
   id                String           @id @default(cuid())
-  webflowCollectionId String?
+  webflowCollectionId String?        @map("webflow_collection_id")
   name              String
   context           String
   site              Site             @relation(fields: [siteId], references: [id])
-  siteId            String
-  userId            String
+  siteId            String           @map("site_id")
+  userId            String           @map("user_id")
   items             CollectionItem[]
   fields            CollectionField[]
   aiTransactions    AITransaction[]
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  createdAt         DateTime         @default(now()) @map("created_at")
+  updatedAt         DateTime         @updatedAt @map("updated_at")
+
+  @@map("collections")
 }
 
 model CollectionItem {
   id                String           @id @default(cuid())
-  webflowItemId     String?
-  targetKeyword     String?
+  webflowItemId     String?          @map("webflow_item_id")
+  targetKeyword     String?          @map("target_keyword")
   context           String?
   status            String?
   collection        Collection       @relation(fields: [collectionId], references: [id])
-  collectionId      String
+  collectionId      String           @map("collection_id")
   site              Site             @relation(fields: [siteId], references: [id])
-  siteId            String
-  userId            String
+  siteId            String           @map("site_id")
+  userId            String           @map("user_id")
   aiTransactions    AITransaction[]
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  createdAt         DateTime         @default(now()) @map("created_at")
+  updatedAt         DateTime         @updatedAt @map("updated_at")
+
+  @@map("collection_items")
 }
 
 model CollectionField {
   id                String           @id @default(cuid())
-  webflowFieldId    String?
+  webflowFieldId    String?          @map("webflow_field_id")
   name              String
   context           String?
   collection        Collection       @relation(fields: [collectionId], references: [id])
-  collectionId      String
+  collectionId      String           @map("collection_id")
   site              Site             @relation(fields: [siteId], references: [id])
-  siteId            String
-  userId            String
+  siteId            String           @map("site_id")
+  userId            String           @map("user_id")
   aiTransactions    AITransaction[]
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  createdAt         DateTime         @default(now()) @map("created_at")
+  updatedAt         DateTime         @updatedAt @map("updated_at")
+
+  @@map("collection_fields")
 }
 
 model AITransaction {
@@ -78,14 +86,16 @@ model AITransaction {
   input             Int
   output            Int
   site              Site             @relation(fields: [siteId], references: [id])
-  siteId            String
+  siteId            String           @map("site_id")
   collection        Collection?      @relation(fields: [collectionId], references: [id])
-  collectionId      String?
+  collectionId      String?          @map("collection_id")
   collectionItem    CollectionItem?  @relation(fields: [collectionItemId], references: [id])
-  collectionItemId  String?
+  collectionItemId  String?          @map("collection_item_id")
   collectionField   CollectionField? @relation(fields: [collectionFieldId], references: [id])
-  collectionFieldId String?
-  userId            String
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  collectionFieldId String?          @map("collection_field_id")
+  userId            String           @map("user_id")
+  createdAt         DateTime         @default(now()) @map("created_at")
+  updatedAt         DateTime         @updatedAt @map("updated_at")
+
+  @@map("ai_transactions")
 }
