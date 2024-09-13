@@ -13,7 +13,7 @@ datasource db {
 model Site {
   id                String           @id @default(cuid())
   name              String
-  source            String
+  source            SourceType
   webflowSiteId     String?          @map("webflow_site_id")
   context           String
   webflowSiteToken  String?          @map("webflow_site_token")
@@ -26,6 +26,11 @@ model Site {
   updatedAt         DateTime         @updatedAt @map("updated_at")
 
   @@map("sites")
+}
+
+enum SourceType {
+  rankflow
+  webflow
 }
 
 model Collection {
