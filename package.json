@@ -10,7 +10,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky install",
-    "port-db": "bash forward-pg-port-ssh.sh"
+    "port-db": "bash forward-pg-port-ssh.sh",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.3",
