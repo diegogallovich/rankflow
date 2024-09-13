@@ -1,10 +1,11 @@
 import { getLogtoContext } from '@logto/next/server-actions';
 import { logtoConfig } from '@/app/logto';
 import Link from 'next/link';
-import { ProfileForm } from '@/app/ui/profile-form'; // Updated import path
 
 export default async function Profile() {
   const { userInfo } = await getLogtoContext(logtoConfig, { fetchUserInfo: true });
+
+  console.log(userInfo);
 
   return (
     <div className="mx-auto max-w-2xl">
@@ -21,9 +22,6 @@ export default async function Profile() {
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Manage your profile</h1>
       </div>
-
-      {/* Profile form */}
-      <ProfileForm userInfo={userInfo} />
     </div>
   );
 }
