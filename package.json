@@ -11,7 +11,7 @@
     "format:check": "prettier --check .",
     "prepare": "husky install",
     "port-db": "bash forward-pg-port-ssh.sh",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate --schema=./prisma/schema.prisma"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.3",
