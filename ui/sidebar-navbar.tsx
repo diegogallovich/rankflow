@@ -16,8 +16,8 @@ import {
   ShieldCheckIcon,
   UserCircleIcon,
 } from '@heroicons/react/16/solid';
-import { SignOutDropdownItem } from '@/app/ui/sign-out';
-import { SignInDropdownItem } from './sign-in';
+import { SignOutDropdownItem } from '@/ui/sign-out';
+import { SignInDropdownItem } from '@/ui/sign-in';
 
 export default async function SidebarNavbar() {
   const { isAuthenticated } = await getLogtoContext(logtoConfig);

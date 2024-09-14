@@ -7,7 +7,7 @@ import {
   SidebarLabel,
   SidebarSection,
 } from '@/components/sidebar';
-import { ThemeToggle } from '@/app/ui/theme-toggle';
+import { ThemeToggle } from '@/ui/theme-toggle';
 import { usePathname } from 'next/navigation';
 
 export default function SidebarSectionGlobalLinks() {

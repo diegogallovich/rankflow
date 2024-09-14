@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@/app/globals.css';
-import { ThemeProvider } from '@/app/ui/theme-provider';
+import { ThemeProvider } from '@/ui/theme-provider';
 import { SidebarLayout } from '@/components/sidebar-layout';
-import SidebarNavbar from '@/app/ui/sidebar-navbar';
+import SidebarNavbar from '@/ui/sidebar-navbar';
 import {
   Sidebar,
   SidebarBody,
@@ -11,12 +11,13 @@ import {
   SidebarHeader,
   SidebarSpacer,
 } from '@/components/sidebar';
-import SitesDropdown from '@/app/ui/sites-dropdown';
-import CollectionsSidebarSection from '@/app/ui/collections-sidebar-section';
-import { SidebarAccountDropdown } from '@/app/ui/sidebar-account-dropdown';
-import JsonLd from '@/app/ui/json-ld';
-import SidebarSectionGlobalLinks from '@/app/ui/sidebar-section-global-links';
-import { SidebarLogo } from '@/app/ui/sidebar-logo';
+import SitesDropdown from '@/ui/sites-dropdown';
+import CollectionsSidebarSection from '@/ui/collections-sidebar-section';
+import { SidebarAccountDropdown } from '@/ui/sidebar-account-dropdown';
+import JsonLd from '@/ui/json-ld';
+import SidebarSectionGlobalLinks from '@/ui/sidebar-section-global-links';
+import { SidebarLogo } from '@/ui/sidebar-logo';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {

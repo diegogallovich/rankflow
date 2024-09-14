@@ -2,10 +2,11 @@ import { getLogtoContext, signIn } from '@logto/next/server-actions';
 import { logtoConfig } from '@/app/logto';
 import { Text, TextLink, Strong } from '@/components/text';
 import { Table, TableHead, TableBody, TableRow, TableHeader, TableCell } from '@/components/table';
-import SelfHostedWaitlistButton from '@/app/ui/self-hosted-waitlist-dialog';
-import EmailListSubscriptionForm from '@/app/ui/email-list-subscription-form';
-import SignIn from '@/app/ui/sign-in';
+import SelfHostedWaitlistButton from '@/ui/self-hosted-waitlist-dialog';
+import EmailListSubscriptionForm from '@/ui/email-list-subscription-form';
+import SignIn from '@/ui/sign-in';
 import { Button } from '@/components/button';
+import { UserIcon } from '@heroicons/react/16/solid';
 
 export default async function Home() {
   const { isAuthenticated } = await getLogtoContext(logtoConfig);
@@ -198,18 +199,22 @@ export default async function Home() {
       </section>
 
       {/* Floating Login Button */}
-      <div className="fixed bottom-4 right-4">
+      <div className="fixed right-4 top-4">
         {isAuthenticated ? (
           <Button outline href="/dashboard">
             Dashboard
           </Button>
         ) : (
           <SignIn
+            outline
             onSignIn={async () => {
               'use server';
               await signIn(logtoConfig);
             }}
-          />
+          >
+            <UserIcon />
+            Sign in
+          </SignIn>
         )}
       </div>
     </div>

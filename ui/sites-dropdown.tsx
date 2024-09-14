@@ -11,9 +11,9 @@ import {
 import { ChevronDownIcon, Cog8ToothIcon, PlusIcon } from '@heroicons/react/16/solid';
 import { SidebarItem, SidebarLabel } from '@/components/sidebar';
 import { headers } from 'next/headers';
-import { SignInDropdownItem } from '@/app/ui/sign-in';
-import prisma from '@/lib/prisma';
+import { SignInDropdownItem } from '@/ui/sign-in';
 import { Site } from '@/lib/definitions';
+import prisma from '@/lib/prisma';
 
 export default async function SitesDropdown() {
   const { isAuthenticated, userInfo } = await getLogtoContext(logtoConfig);

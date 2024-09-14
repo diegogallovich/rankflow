@@ -3,7 +3,7 @@ import { logtoConfig } from '@/app/logto';
 import { SidebarSection, SidebarHeading, SidebarItem, SidebarLabel } from '@/components/sidebar';
 import { PlusIcon } from '@heroicons/react/16/solid';
 import { headers } from 'next/headers';
-import { SignInSidebarItem } from '@/app/ui/sign-in';
+import { SignInSidebarItem } from '@/ui/sign-in';
 
 const collectionsMock = [
   {
