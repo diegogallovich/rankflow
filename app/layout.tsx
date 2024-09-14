@@ -9,7 +9,6 @@ import {
   SidebarBody,
   SidebarFooter,
   SidebarHeader,
-  SidebarLogo,
   SidebarSpacer,
 } from '@/components/sidebar';
 import SitesDropdown from '@/app/ui/sites-dropdown';
@@ -17,7 +16,7 @@ import CollectionsSidebarSection from '@/app/ui/collections-sidebar-section';
 import { SidebarAccountDropdown } from '@/app/ui/sidebar-account-dropdown';
 import JsonLd from '@/app/ui/json-ld';
 import SidebarSectionGlobalLinks from '@/app/ui/sidebar-section-global-links';
-
+import { SidebarLogo } from '@/app/ui/sidebar-logo';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
