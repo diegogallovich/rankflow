@@ -68,7 +68,6 @@ export const updateCollectionItemSchema = z.object({
 export type Site = {
   id: string;
   name: string;
-  source: 'webflow' | 'rankflow';
   webflowSiteId?: string;
   context: string;
   webflowSiteToken?: string;

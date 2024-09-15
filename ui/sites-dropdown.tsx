@@ -12,7 +12,6 @@ import { ChevronDownIcon, Cog8ToothIcon, PlusIcon } from '@heroicons/react/16/so
 import { SidebarItem, SidebarLabel } from '@/components/sidebar';
 import { headers } from 'next/headers';
 import { SignInDropdownItem } from '@/ui/sign-in';
-import { Site } from '@/lib/definitions';
 import prisma from '@/lib/prisma';
 
 export default async function SitesDropdown() {
@@ -23,12 +22,12 @@ export default async function SitesDropdown() {
   // grab current site id from pathname
   const currentSiteId = pathname?.split('/')[2];
 
-  let sites: Site[] = [];
-  let currentSite: Site | null = null;
+  let sites;
+  let currentSite;
 
   if (isAuthenticated && userInfo?.sub) {
-    sites = (await prisma.site.findMany({ where: { userId: userInfo.sub } })) as Site[];
-    currentSite = sites.find((site: Site) => site.id === currentSiteId) || sites[0] || null;
+    sites = await prisma.site.findMany({ where: { userId: userInfo.sub } });
+    currentSite = sites.find((site) => site.id === currentSiteId) || sites[0] || null;
   }
 
   return (
@@ -55,11 +54,12 @@ export default async function SitesDropdown() {
               </>
             )}
 
-            {sites.map((site: Site) => (
-              <DropdownItem key={site.id} href={`/sites/${site.id}`}>
-                <DropdownLabel>{site.name}</DropdownLabel>
-              </DropdownItem>
-            ))}
+            {sites &&
+              sites.map((site) => (
+                <DropdownItem key={site.id} href={`/sites/${site.id}`}>
+                  <DropdownLabel>{site.name}</DropdownLabel>
+                </DropdownItem>
+              ))}
 
             <DropdownDivider />
 
