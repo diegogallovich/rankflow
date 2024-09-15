@@ -104,3 +104,31 @@ model AITransaction {
 
   @@map("ai_transactions")
 }
+
+model Onboarding {
+  id                String   @id @default(cuid())
+  userId            String   @unique @map("user_id")
+  currentStep       Int      @default(1)
+  isCompleted       Boolean  @default(false)
+  skippedAt         DateTime?
+  startedAt         DateTime @default(now())
+  completedAt       DateTime?
+  lastUpdatedAt     DateTime @updatedAt
+  steps             OnboardingStep[]
+
+  @@map("onboardings")
+}
+
+model OnboardingStep {
+  id            String   @id @default(cuid())
+  onboarding    Onboarding @relation(fields: [onboardingId], references: [id])
+  onboardingId  String
+  stepNumber    Int
+  stepName      String
+  isCompleted   Boolean  @default(false)
+  startedAt     DateTime?
+  completedAt   DateTime?
+
+  @@map("onboarding_steps")
+  @@unique([onboardingId, stepNumber])
+}
