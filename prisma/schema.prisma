@@ -14,10 +14,9 @@ datasource db {
 model Site {
   id                String           @id @default(cuid())
   name              String
-  source            SourceType
-  webflowSiteId     String?          @map("webflow_site_id")
+  webflowSiteId     String          @map("webflow_site_id")
   context           String
-  webflowSiteToken  String?          @map("webflow_site_token")
+  siteToken         String          @map("site_token")
   userId            String           @map("user_id")
   collections       Collection[]
   collectionItems   CollectionItem[]
@@ -29,15 +28,9 @@ model Site {
   @@map("sites")
 }
 
-enum SourceType {
-  rankflow
-  webflow
-}
-
 model Collection {
   id                String           @id @default(cuid())
-  webflowCollectionId String?        @map("webflow_collection_id")
-  name              String
+  webflowCollectionId String        @map("webflow_collection_id")
   context           String
   site              Site             @relation(fields: [siteId], references: [id])
   siteId            String           @map("site_id")
@@ -53,10 +46,10 @@ model Collection {
 
 model CollectionItem {
   id                String           @id @default(cuid())
-  webflowItemId     String?          @map("webflow_item_id")
+  webflowItemId     String          @map("webflow_item_id")
   targetKeyword     String?          @map("target_keyword")
   context           String?
-  status            String?
+  status            String
   collection        Collection       @relation(fields: [collectionId], references: [id])
   collectionId      String           @map("collection_id")
   site              Site             @relation(fields: [siteId], references: [id])
@@ -71,7 +64,8 @@ model CollectionItem {
 
 model CollectionField {
   id                String           @id @default(cuid())
-  webflowFieldId    String?          @map("webflow_field_id")
+  webflowFieldId    String          @map("webflow_field_id")
+  fieldType         String          @map("field_type")
   name              String
   context           String?
   collection        Collection       @relation(fields: [collectionId], references: [id])
@@ -91,14 +85,18 @@ model AITransaction {
   model             String
   input             Int
   output            Int
+  ignoredSiteContext Boolean          @default(false)
+  ignoredCollectionContext Boolean          @default(false)
+  ignoredCollectionItemContext Boolean          @default(false)
+  ignoredCollectionFieldContext Boolean          @default(false)
   site              Site             @relation(fields: [siteId], references: [id])
   siteId            String           @map("site_id")
-  collection        Collection?      @relation(fields: [collectionId], references: [id])
-  collectionId      String?          @map("collection_id")
-  collectionItem    CollectionItem?  @relation(fields: [collectionItemId], references: [id])
-  collectionItemId  String?          @map("collection_item_id")
-  collectionField   CollectionField? @relation(fields: [collectionFieldId], references: [id])
-  collectionFieldId String?          @map("collection_field_id")
+  collection        Collection       @relation(fields: [collectionId], references: [id])
+  collectionId      String           @map("collection_id")
+  collectionItem    CollectionItem   @relation(fields: [collectionItemId], references: [id])
+  collectionItemId  String           @map("collection_item_id")
+  collectionField   CollectionField  @relation(fields: [collectionFieldId], references: [id])
+  collectionFieldId String           @map("collection_field_id")
   userId            String           @map("user_id")
   createdAt         DateTime         @default(now()) @map("created_at")
   updatedAt         DateTime         @updatedAt @map("updated_at")
