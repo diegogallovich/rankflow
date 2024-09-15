@@ -1,7 +1,7 @@
 import { Button } from '@/components/button';
 import SignIn from '@/ui/sign-in';
 import { signIn } from '@logto/next/server-actions';
-import { logtoConfig } from '@/app/logto';
+import { logtoConfig } from '@/lib/logto';
 import { NotifyUsDialog } from '@/ui/notify-us-dialog';
 
 export default function AuthGate() {

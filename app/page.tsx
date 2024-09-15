@@ -1,5 +1,5 @@
 import { getLogtoContext, signIn } from '@logto/next/server-actions';
-import { logtoConfig } from '@/app/logto';
+import { logtoConfig } from '@/lib/logto';
 import { Text, TextLink, Strong } from '@/components/text';
 import { Table, TableHead, TableBody, TableRow, TableHeader, TableCell } from '@/components/table';
 import SelfHostedWaitlistButton from '@/ui/self-hosted-waitlist-dialog';

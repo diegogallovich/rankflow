@@ -1,5 +1,5 @@
 import { getLogtoContext, signIn } from '@logto/next/server-actions';
-import { logtoConfig } from '@/app/logto';
+import { logtoConfig } from '@/lib/logto';
 import { SidebarSection, SidebarHeading, SidebarItem, SidebarLabel } from '@/components/sidebar';
 import { PlusIcon } from '@heroicons/react/16/solid';
 import { headers } from 'next/headers';
