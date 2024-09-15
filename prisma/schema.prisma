@@ -3,13 +3,12 @@
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["tracing"]
+  //previewFeatures = ["tracing"]
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl = env("DATABASE_URL_DIRECT")
+  url      = env("DATABASE_URL_DIRECT")
 }
 
 model Site {
@@ -108,12 +107,11 @@ model AITransaction {
 model Onboarding {
   id                String   @id @default(cuid())
   userId            String   @unique @map("user_id")
-  currentStep       Int      @default(1)
-  isCompleted       Boolean  @default(false)
-  skippedAt         DateTime?
-  startedAt         DateTime @default(now())
-  completedAt       DateTime?
-  lastUpdatedAt     DateTime @updatedAt
+  isCompleted       Boolean  @default(false) @map("is_completed")
+  skippedAt         DateTime? @map("skipped_at")
+  startedAt         DateTime @default(now()) @map("started_at")
+  completedAt       DateTime? @map("completed_at")
+  lastUpdatedAt     DateTime @updatedAt @map("last_updated_at")
   steps             OnboardingStep[]
 
   @@map("onboardings")
@@ -122,13 +120,12 @@ model Onboarding {
 model OnboardingStep {
   id            String   @id @default(cuid())
   onboarding    Onboarding @relation(fields: [onboardingId], references: [id])
-  onboardingId  String
-  stepNumber    Int
-  stepName      String
-  isCompleted   Boolean  @default(false)
-  startedAt     DateTime?
-  completedAt   DateTime?
+  onboardingId  String   @map("onboarding_id")
+  stepNumber    Int @map("step_number")
+  stepName      String   @map("step_name")
+  isCompleted   Boolean  @default(false) @map("is_completed")
+  startedAt     DateTime? @map("started_at")
+  completedAt   DateTime? @map("completed_at")
 
   @@map("onboarding_steps")
-  @@unique([onboardingId, stepNumber])
 }

@@ -20,16 +20,11 @@ export const logtoConfig: LogtoNextConfig = {
 
 export const verifyLogtoWebhook = async (
   signingKey: string,
-  rawBody: ReadableStream<Uint8Array>,
+  rawBody: string,
   expectedSignature: string
 ) => {
   const hmac = createHmac('sha256', signingKey);
-  const reader = rawBody.getReader();
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    hmac.update(value);
-  }
+  hmac.update(rawBody);
   const signature = hmac.digest('hex');
   return signature === expectedSignature;
 };
