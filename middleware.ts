@@ -19,7 +19,9 @@ export async function middleware(request: NextRequest) {
   const isProtectedRoute = PROTECTED_ROUTES.some((route) =>
     request.nextUrl.pathname.startsWith(route)
   );
+
   if (isProtectedRoute) {
+    console.log('isProtectedRoute');
     const { isAuthenticated } = await getLogtoContext(logtoConfig);
     if (!isAuthenticated) {
       return NextResponse.redirect(new URL('/auth-gate', request.url));

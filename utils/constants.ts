@@ -1,6 +1,6 @@
 import { getEnvVariable } from '@/utils/get-env-variable';
 
-export const PROTECTED_ROUTES = ['/dashboard', '/account', '/api/protected'];
+export const PROTECTED_ROUTES = ['/dashboard', '/account'];
 
 export const ALLOWED_ORIGINS = [
   getEnvVariable('LOGTO_ENDPOINT'),
