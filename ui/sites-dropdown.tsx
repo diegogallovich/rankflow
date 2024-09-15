@@ -1,5 +1,5 @@
 import { getLogtoContext, signIn } from '@logto/next/server-actions';
-import { logtoConfig } from '@/app/logto';
+import { logtoConfig } from '@/lib/logto';
 import {
   Dropdown,
   DropdownButton,

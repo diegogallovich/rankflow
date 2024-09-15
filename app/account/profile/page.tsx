@@ -1,5 +1,5 @@
 import { getLogtoContext } from '@logto/next/server-actions';
-import { logtoConfig } from '@/app/logto';
+import { logtoConfig } from '@/lib/logto';
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/table';
 

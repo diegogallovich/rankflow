@@ -1,5 +1,6 @@
 import { UserScope, LogtoNextConfig } from '@logto/next';
 import { getEnvVariable } from '@/utils/get-env-variable';
+import { createHmac } from 'node:crypto';
 
 export const logtoConfig: LogtoNextConfig = {
   scopes: [
@@ -15,4 +16,20 @@ export const logtoConfig: LogtoNextConfig = {
   baseUrl: getEnvVariable('NEXT_PUBLIC_SITE_URL'),
   cookieSecret: getEnvVariable('LOGTO_COOKIE_SECRET'),
   cookieSecure: process.env.NODE_ENV === 'production',
+};
+
+export const verifyLogtoWebhook = async (
+  signingKey: string,
+  rawBody: ReadableStream<Uint8Array>,
+  expectedSignature: string
+) => {
+  const hmac = createHmac('sha256', signingKey);
+  const reader = rawBody.getReader();
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    hmac.update(value);
+  }
+  const signature = hmac.digest('hex');
+  return signature === expectedSignature;
 };
